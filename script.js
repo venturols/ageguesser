@@ -1,54 +1,41 @@
-body {
-  background-image: url("images/notebook-background.jpg");
-  background-size: cover;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  color: #333;
-}
+document.getElementById('calculateBtn').addEventListener('click', function() {
+  var yearInput = parseInt(document.getElementById('year').value);
+  var currentYear = new Date().getFullYear();
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 40px;
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
+  if (!isNaN(yearInput) && yearInput <= currentYear) {
+    var age = currentYear - yearInput;
+    document.getElementById('result').textContent = 'L\'età è: ' + age + ' anni';
+    displayEvents(yearInput);
+  } else {
+    document.getElementById('result').textContent = 'Anno di nascita non valido';
+    document.getElementById('events').textContent = '';
+  }
+});
 
-h1 {
-  text-align: center;
-}
+function displayEvents(year) {
+  var events = {
+    1994: [
+      'Nelson Mandela diventa il presidente del Sudafrica',
+      'Inizia la produzione del primo smartphone, l\'IBM Simon Personal Communicator'
+      // Aggiungi altri eventi importanti del 1994
+    ],
+    2001: [
+      'L\'11 settembre: gli attentati terroristici alle Torri Gemelle negli Stati Uniti',
+      'Apple lancia il primo iPod'
+      // Aggiungi altri eventi importanti del 2001
+    ],
+    // Aggiungi altri anni e relativi eventi qui
+  };
 
-label {
-  display: block;
-  margin-bottom: 10px;
-}
+  var eventsContainer = document.getElementById('events');
+  eventsContainer.innerHTML = '';
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 0 auto 20px;
-  font-size: 16px;
-}
-
-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  background-color: #ff0000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-#result {
-  font-size: 24px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-#events {
-  font-size: 16px;
-  line-height: 1.5;
+  if (events.hasOwnProperty(year)) {
+    var eventList = events[year];
+    eventList.forEach(function(event) {
+      var eventItem = document.createElement('p');
+      eventItem.textContent = event;
+      eventsContainer.appendChild(eventItem);
+    });
+  }
 }
